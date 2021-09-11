@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+    	<update id="magepow" title="Magepow" module="Magepow_Promotionbar" sortOrder="10" resource="Magepow_Promotionbar::magepow" />
+    	 <add id="Magepow_Promotionbar::magepow" title="Promotionbar" module="Magepow_Promotionbar" sortOrder="10" parent="magepow" resource="Magepow_Promotionbar::magepow" />
+       <!--  <add id="magepow" title="Magepow" module="Magepow_Sizechart"  sortOrder="10" resource="Magepow_Sizechart::magepow" /> -->
+        <add id="Magepow_Promotionbar::Promotionbar" title="Promotionbar Management" module="Magepow_Promotionbar" parent="Magepow_Promotionbar::magepow" sortOrder="20" action="magepow_promotionbar/promotionbar" resource="Magepow_Promotionbar::promotionbar"/>
+        
+    </menu>
+</config>

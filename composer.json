@@ -1,0 +1,25 @@
+{
+  "name": "magepow/promotionbar",
+  "description": "Promotionbar extension for Magento helps you create promotionbar for your website.",
+  "type": "magento2-module",
+  "license": [
+      "OSL-3.0",
+      "AFL-3.0"
+  ],
+  "authors": [
+    {
+      "name": "Magepow",
+      "email": "support@magepow.com",
+      "homepage": "https://magepow.com",
+      "role": "Technical Support"
+    }
+  ],
+  "autoload": {
+      "files": [
+          "registration.php"
+      ],
+      "psr-4": {
+          "Magepow\\Promotionbar\\": ""
+      }
+  }
+}

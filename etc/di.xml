@@ -1,0 +1,24 @@
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../lib/internal/Magento/Framework/ObjectManager/etc/config.xsd">
+    <preference for="Magepow\Promotionbar\Api\Data\PromotionbarInterface" type="Magepow\Promotionbar\Model\Promotionbar" />
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+            <item name="magepow_promotionbar_promotionbar_listing_data_source" xsi:type="string">Magepow\Promotionbar\Model\ResourceModel\Promotionbar\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+  
+    <virtualType name="Magepow\Promotionbar\Model\ResourceModel\Promotionbar\Grid\Collection" 
+        type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+        <arguments>
+        <argument name="mainTable" xsi:type="string">promotionbar_management</argument>
+            <argument name="resourceModel" xsi:type="string">Magepow\Promotionbar\Model\ResourceModel\Promotionbar</argument>
+        </arguments>
+    </virtualType>
+     <type name="Magento\Ui\Component\Wysiwyg\ConfigInterface">
+            <plugin name="promotionbar_wysiwyg_config"
+                    type="Magepow\Promotionbar\Plugin\Config"
+                    sortOrder="10"/>
+        </type>
+      
+</config>

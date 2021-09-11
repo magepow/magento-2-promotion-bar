@@ -1,0 +1,87 @@
+<?php 
+
+	$helper = $this->helper('Magepow\promotionbar\Helper\Data');
+	$showSlider = $helper->getConfigModule('magepow_promotionbar/general/showslider');
+	$sliderControl = $block->getDataSliderControl();
+	$speedSlider = $helper->getConfigModule('magepow_promotionbar/general/speedslider');
+	$autoclose = $helper->getConfigModule('magepow_promotionbar/general/autoclose');
+	$selector    = 'promotionbar-'.uniqid();
+	?>
+<div data-mage-init='{"promotionbar": {}}'>
+	<?php if($block->getRequest()->getFullActionName() == "cms_index_index"
+	||$block->getRequest()->getFullActionName() == "checkout_cart_index"
+	|| $block->getRequest()->getFullActionName() == "checkout_index_index") {?> 
+<div data-role="promotion-collection" class="promotionbar promotionbar-topmenu <?php echo $selector ?>">
+	
+
+	<?php $productPromotion = $block->getPromotionbarCollection(); ?>
+	<?php foreach ($productPromotion as $value):?>
+		<?php if($value->getPosition() == 2){ ?>
+
+	<div id="content <?php echo ($value->getPosition())?>-<?php echo ($value->getEntityId())?>"><?php echo $block->getContentFromStaticBlock($value->getPromotionbarInfo());?>
+		
+	</div>
+	<?php } ?>
+	<?php  endforeach; ?>
+	</div>
+<?php } ?>
+
+
+<?php if($block->getRequest()->getFullActionName() == "catalog_category_view") {
+	$productPromotion = $block->getPromotionbarCategory();
+	if(!$productPromotion) return;
+	$promotionInfo = $productPromotion['promotionbar_info'];
+	$position = $productPromotion['position'];
+	$id = $productPromotion['entity_id'];
+
+	if($position == 2){
+	?>
+	<div data-role="promotion-collection"class="promotionbar promotionbar-topmenu <?php echo $selector ?>">
+
+	<div id="content <?php echo ($position)?>-<?php echo ($id)?>"><?php echo $block->getContentFromStaticBlock($promotionInfo);?>
+		
+	</div>
+</div>
+
+
+
+<?php } 
+}
+?>
+<?php if($block->getRequest()->getFullActionName() == "catalog_product_view") {
+	$productPromotion = $block->getPromotionbarProduct();
+	if(!$productPromotion) return;
+	$promotionInfo = $productPromotion['promotionbar_info'];
+	$position = $productPromotion['position'];
+	if($position == 2){
+	?>
+	<div data-role="promotion-collection"class="promotionbar promotionbar-topmenu <?php echo $selector ?>">
+
+	<div id="content <?php echo ($position)?>"><?php echo $block->getContentFromStaticBlock($promotionInfo);?>
+		
+	</div>
+</div>
+
+
+
+<?php } 
+}
+?>
+	
+
+
+
+
+</div>
+<script type="text/x-magento-init">
+        {
+            "[data-role=promotion-collection]": {
+                "Magepow_Promotionbar/js/common": {
+                    "showSlider": <?=  $showSlider ?>,
+                    "sliderControl": <?= $sliderControl ?>,
+                    "speedSlider": <?= $speedSlider ?>
+                   
+                }
+            }
+        }
+    </script> 

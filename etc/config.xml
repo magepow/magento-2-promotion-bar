@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <magepow_promotionbar>
+            <general>
+                <enabled>1</enabled>
+                <showslider>1</showslider>
+                <showslidercontrol>1</showslidercontrol>
+                <speedslider>3</speedslider>
+            </general>
+        </magepow_promotionbar>
+    </default>
+</config>

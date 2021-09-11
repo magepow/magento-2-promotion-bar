@@ -1,0 +1,196 @@
+<?php
+
+namespace Magepow\Promotionbar\Observer;
+use Magento\Framework\Event\Observer;
+use Magento\Framework\Event\ObserverInterface;
+use Magepow\Promotionbar\Model\Position;
+use Magepow\Promotionbar\Model\SelectPage;
+use Magento\Widget\Model\Layout\UpdateFactory;
+
+
+class Promotionbar implements ObserverInterface
+{
+    protected $_scopeConfig;
+ 
+  protected $request;
+  protected $_promotionbar;
+  protected $_ruleFactory;
+  protected $_registry;
+  protected $_helper;
+  const BLOCK = 'Magepow\Promotionbar\Block\Product\Promotionbar';
+   const TEMPLATE_PRODUCT     = 'Magepow_Promotionbar::promotionbarProduct.phtml';
+   const TEMPLATE_CATEGORY ='Magepow_Promotionbar::promotionbarCategory.phtml';
+   const TEMPLATE_PAGES = 'Magepow_Promotionbar::promotionbar.phtml';
+   
+  public function __construct(
+    \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
+      \Magento\Framework\App\Request\Http $request,
+      \Magepow\Promotionbar\Block\Product\Promotionbar $promotionbar,
+      \Magento\CatalogWidget\Model\RuleFactory $ruleFactory,
+      \Magepow\Promotionbar\Helper\Data $helper,
+
+       \Magento\Framework\Registry $registry
+     
+  ) {
+
+    $this->_scopeConfig = $scopeConfig;
+    $this->request = $request;
+    $this->_promotionbar = $promotionbar;
+    $this->_registry = $registry;
+    $this->_helper = $helper;
+   
+  }
+
+ public function execute(Observer $observer)
+ {
+    /** @var LayoutInterface $layout */
+   // $actionName = $this->request->getFullActionName();
+  if(!$this->_helper->getConfigModule('general/enabled')) return;
+
+  $promotionbarCollection = $this->_promotionbar->getPromotionbarCollection();
+   
+
+
+    $layout = $observer->getEvent()->getLayout();
+    
+       $xml = $this->getPosition();
+  
+     $layout->getUpdate()->addUpdate($xml);
+      $layout->generateXml();
+          
+            
+        }
+
+     public function combineArray($a, $b)
+{
+    $aArray = count($a);
+    $bArray = count($b);
+    $size = ($aArray > $bArray) ? $bArray : $aArray;
+    $a = array_slice($a, 0, $size);
+    $b = array_slice($b, 0, $size);
+    return array_combine($a, $b);
+}
+    
+    public function getDisplayPage(){
+     
+      $pageConstant = array('cms_index_index', 'checkout_cart_index', 'checkout_index_index');
+
+       $promotionbarCollection = $this->_promotionbar->getPromotionbarCollection();
+        foreach ($promotionbarCollection as $item) {
+          $displayPage = $item->getData('display_onpage');
+          $pageArray = explode(',', $displayPage);
+           $newArray = $this->combineArray($pageArray, $pageConstant);
+          if(empty($pageArray)){
+            $newArray = [];
+          }
+        
+         
+      return $newArray;
+         
+         
+        
+    }
+     
+  }
+    public function getContainer($position){
+
+      if(Position::CONTENT_TOP){
+        $position = "content.top";
+        
+      }else if(Position::CONTENT_BOTTOM){
+        $position = "content.bottom";
+        
+      }else if(Position::MENU_TOP){
+          $position = "header.container";
+      }else if( Position::PAGE_BOTTOM){
+          $position =  "page.bottom.container";
+      }
+      return $position;
+
+    }
+    public function getLayoutXml($display){
+      if($display == 0){
+        $layout = "All Pages";
+      }else{
+        $layout = "Specific Page(s)";
+      }
+      return $layout;
+    }
+
+    public function getPosition(){
+      $actionName = $this->request->getFullActionName();
+     
+      $page = $this->getDisplayPage();
+      $promotionbarCollection = $this->_promotionbar->getPromotionbarCollection();
+      $xml = '';
+     foreach ($promotionbarCollection as  $value) {
+       $position = $value->getPosition(); 
+       $displayPage = $value->getData('display_onpage');
+       $page = $this->getDisplayPage();
+     
+       $displayOnProductPage = $value->getData('is_shown_on_productpage');
+       if($displayOnProductPage == 1) {
+      
+       if ($actionName == "catalog_product_view") {
+           $xml = '<referenceContainer name="' . $position . '">
+          <block class="' . self::BLOCK . '" template="' . self::TEMPLATE_PRODUCT . '">
+                               
+                            </block>
+        </referenceContainer>';
+         
+        }
+      }
+       
+        if ($actionName == "catalog_category_view") {
+           $xml = '<referenceContainer name="' . $position . '">
+          <block class="' . self::BLOCK . '" template="' . self::TEMPLATE_CATEGORY . '">
+                               
+                            </block>
+        </referenceContainer>';
+         
+        }
+      
+  if($actionName == 'cms_index_index' && in_array($actionName, $page)){
+           $xml = '<referenceContainer name="' . $position . '">
+          <block class="' . self::BLOCK . '" template="' . self::TEMPLATE_PAGES . '">
+                               
+                            </block>
+        </referenceContainer>';
+
+        }
+        if($actionName == 'checkout_index_index' && in_array($actionName, $page)){
+           $xml = '<referenceContainer name="' . $position . '">
+          <block class="' . self::BLOCK . '" template="' . self::TEMPLATE_PAGES . '">
+                               
+                            </block>
+        </referenceContainer>';
+
+        }
+         if($actionName == 'checkout_cart_index' && in_array($actionName, $page)){
+           $xml = '<referenceContainer name="' . $position . '">
+          <block class="' . self::BLOCK . '" template="' . self::TEMPLATE_PAGES . '">
+                               
+                            </block>
+        </referenceContainer>';
+
+        }
+        // }
+        // if($getPage == 0){
+        //     $xml = '<referenceContainer name="' . $position . '">
+        //   <block class="' . self::BLOCK . '" template="' . self::TEMPLATE_ALLPAGES . '">
+                               
+        //                     </block>
+        // </referenceContainer>';
+        // }
+
+       
+        
+       
+    
+}
+  return $xml;
+    
+}
+}
+
+

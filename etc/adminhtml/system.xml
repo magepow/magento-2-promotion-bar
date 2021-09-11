@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="magepow" translate="label" sortOrder="10">
+            <label>Magepow</label>
+        </tab>
+        <section id="magepow_promotionbar" translate="label" sortOrder="130" showInDefault="1" showInWebsite="1" showInStore="1">
+            <class>separator-top</class>
+            <label>Promotion bar</label>
+            <tab>magepow</tab>
+            <resource>Magepow_Promotionbar::promotionbar_config</resource>
+            <group id="general" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
+                <label><![CDATA[General]]></label>
+                <field id="enabled" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="1" canRestore="1">
+                    <label>Module Enable</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="showslider" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="1" canRestore="1">
+                    <label>Show Slider</label>
+                    <comment> Show banner as a slider</comment>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                </field>
+                 <field id="showslidercontrol" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="1" canRestore="1">
+                    <label>Show Slider Control</label>
+                    <comment> Choose Yes to enable “Previous” / “Next” button on the slider.</comment>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                     
+                </field>
+                 <field id="speedslider" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="1" canRestore="1">
+                    <label>Auto speed slider (seconds)</label>
+                    <comment> Transit time for slider</comment>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
+
+                  
+                </field>      
+                   
+            </group>
+        </section>
+    </system>
+</config>
