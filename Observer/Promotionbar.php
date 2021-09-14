@@ -20,7 +20,7 @@ class Promotionbar implements ObserverInterface
   const BLOCK = 'Magepow\Promotionbar\Block\Product\Promotionbar';
    const TEMPLATE_TOPCONTENT     = 'Magepow_Promotionbar::promotionbar_topcontent.phtml';
    const TEMPLATE_TOPMENU ='Magepow_Promotionbar::promotionbar_topmenu.phtml';
-   const TEMPLATE_BOTTOMCONTENT = 'Magepow_Promotionbar::promotionbar_bottomcontent.phtml';
+   
    const TEMPLATE_BOTTOMPAGE ='Magepow_Promotionbar::promotionbar_bottompage.phtml' ;
    
   public function __construct(
@@ -82,15 +82,7 @@ class Promotionbar implements ObserverInterface
           $layout->getUpdate()->addUpdate($xml);
       $layout->generateXml();
         }
-        if($position == 3) {
-          $xml = '<referenceContainer name="content.bottom">
-          <block class="' . self::BLOCK . '" template="' . self::TEMPLATE_BOTTOMCONTENT . '">
-                               
-                            </block>
-        </referenceContainer>';
-          $layout->getUpdate()->addUpdate($xml);
-      $layout->generateXml();
-      }if($position == 4){
+        if($position == 3){
          $xml = '<referenceContainer name="page.bottom.container">
           <block class="' . self::BLOCK . '" template="' . self::TEMPLATE_BOTTOMPAGE . '">
                                
@@ -122,23 +114,15 @@ class Promotionbar implements ObserverInterface
           $layout->getUpdate()->addUpdate($xml);
           $layout->generateXml();
 
-        }if($position == 3) {
-          $xml = '<referenceContainer name="content.bottom">
-          <block class="' . self::BLOCK . '" template="' . self::TEMPLATE_BOTTOMCONTENT . '">
-                               
-                            </block>
-        </referenceContainer>';
-          $layout->getUpdate()->addUpdate($xml);
-           $layout->generateXml();
-
-      }if($position == 4){
+        }
+        if($position == 3){
          $xml = '<referenceContainer name="page.bottom.container">
           <block class="' . self::BLOCK . '" template="' . self::TEMPLATE_BOTTOMPAGE . '">
                                
                             </block>
         </referenceContainer>';
           $layout->getUpdate()->addUpdate($xml);
-          $layout->generateXml();
+      $layout->generateXml();
       }
          
         }     
@@ -165,17 +149,9 @@ class Promotionbar implements ObserverInterface
           $layout->generateXml();
       }
 
-         if($position == 3) {
-          $xml = '<referenceContainer name="content.bottom">
-          <block class="' . self::BLOCK . '" template="' . self::TEMPLATE_BOTTOMCONTENT . '">
-                               
-                            </block>
-        </referenceContainer>';
-        $layout->getUpdate()->addUpdate($xml);
-        $layout->generateXml();
-      }
+        
 
-      if($position == 4){
+      if($position == 3){
          $xml = '<referenceContainer name="page.bottom.container">
           <block class="' . self::BLOCK . '" template="' . self::TEMPLATE_BOTTOMPAGE . '">
                                

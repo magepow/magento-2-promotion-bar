@@ -16,7 +16,7 @@
 
 	<?php $productPromotion = $block->getPromotionbarCollection(); ?>
 	<?php foreach ($productPromotion as $value):?>
-		<?php if($value->getPosition() == 4){ ?>
+		<?php if($value->getPosition() == 3){ ?>
 
 	<div id="content <?php echo ($value->getPosition())?>-<?php echo ($value->getEntityId())?>"><?php echo $block->getContentFromStaticBlock($value->getPromotionbarInfo());?>
 		
@@ -33,7 +33,7 @@
 	$promotionInfo = $productPromotion['promotionbar_info'];
 	$position = $productPromotion['position'];
 	$id = $productPromotion['entity_id'];
-	if($position == 4){
+	if($position == 3){
 	?>
 	<div data-role="promotion-collection"class="promotionbar-bottompage <?php echo $selector ?>">
 
@@ -52,7 +52,7 @@
 	if(!$productPromotion) return;
 	$promotionInfo = $productPromotion['promotionbar_info'];
 	$position = $productPromotion['position'];
-	if($position == 4){
+	if($position == 3){
 	?>
 	<div data-role="promotion-collection"class="promotionbar-bottompage <?php echo $selector ?>">
 

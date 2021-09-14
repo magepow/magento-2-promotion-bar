@@ -8,7 +8,7 @@ class Position implements OptionSourceInterface
     
     public function getOptionArray()
     {
-       $options = ['1' => __('Content Top'),'2' => __('Menu Top'), '3'=>__('Content Bottom'),'4' =>__('Page Bottom')];
+       $options = ['1' => __('Content Top'),'2' => __('Menu Top'),'3' =>__('Page Bottom')];
         return $options;
     }
  

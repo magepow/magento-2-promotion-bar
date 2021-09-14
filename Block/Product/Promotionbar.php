@@ -48,7 +48,7 @@ class Promotionbar extends \Magento\Catalog\Block\Product\AbstractProduct
            \Magento\Framework\Stdlib\DateTime\TimezoneInterface $timezone,
           \ Magento\Rule\Model\Condition\Combine $validate,
            \Magepow\Promotionbar\Helper\Data $helper,
-             \Magepow\Promotionbar\Serialize\Serializer\Json $json
+             \Magepow\Promotionbar\Serialize\Serializer\Json $json,
 
         array $data = []
     ) {
