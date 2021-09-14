@@ -44,7 +44,7 @@ php bin/magento setup:static-content:deploy -f
   
   ### 2. Details Configuration
    #### 2.1 Add, Edit Prmotionbar
-   Choose `Magepow->Promotionbar Management->Add New Size Chart Rule`.
+   Choose `Magepow->Promotionbar Management->Add New Promotionbar Rule`.
    
    ##### 2.1.1 General Information
    ![Image of magento backend](https://github.com/magepow/magento-2-promotion-bar/blob/master/media/promotionbar_general_1.png)
