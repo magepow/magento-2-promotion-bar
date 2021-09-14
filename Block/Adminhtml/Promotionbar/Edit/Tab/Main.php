@@ -142,6 +142,7 @@ class Main extends Generic implements TabInterface
                 'class' => 'validate-date validate-date-range date-range-custom_theme-from',
                 'class' => 'required-entry',
                 'style' => 'width:200px',
+                'required' => true
             ]
         );
          $fieldset->addField(
@@ -155,6 +156,7 @@ class Main extends Generic implements TabInterface
                 'class' => 'validate-date validate-date-range date-range-custom_theme-from',
                 'class' => 'required-entry',
                 'style' => 'width:200px',
+                'required' => true
             ]
         );        
 

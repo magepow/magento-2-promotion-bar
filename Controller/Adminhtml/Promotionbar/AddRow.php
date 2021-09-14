@@ -7,17 +7,20 @@ use Magento\Framework\Controller\ResultFactory;
 
 class AddRow extends \Magento\Backend\App\Action
 {
-       private $coreRegistry;
+    private $coreRegistry;
     private $promotionbarFactory;
+    private $_json;
   
 
     public function __construct(\Magento\Backend\App\Action\Context $context, 
         \Magento\Framework\Registry $coreRegistry,
-        \Magepow\Promotionbar\Model\PromotionbarFactory $promotionbarFactory
+        \Magepow\Promotionbar\Model\PromotionbarFactory $promotionbarFactory,
+         \Magepow\Promotionbar\Serialize\Serializer\Json $json
     ) {
         parent::__construct($context);
         $this->coreRegistry = $coreRegistry;
         $this->promotionbarFactory = $promotionbarFactory;
+        $this->_json = $json;
     }
 //   public function unserialize($data)
 //  {
@@ -47,7 +50,7 @@ class AddRow extends \Magento\Backend\App\Action
              }
               else{        
             
-                $tmp = @unserialize($rowData->getConditionsSerialized());
+                $tmp = $this->_json->unserialize($rowData->getConditionsSerialized());
                 if(is_array($tmp)){
                     unset($tmp['form_key']);
                     unset($tmp['entity_id']);

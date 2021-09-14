@@ -28,6 +28,7 @@ class Promotionbar extends \Magento\Catalog\Block\Product\AbstractProduct
     protected $_conditions;
     protected $_helper;
     protected $validate;
+    protected $_json;
 
     /**
      * @param Context $context
@@ -47,6 +48,7 @@ class Promotionbar extends \Magento\Catalog\Block\Product\AbstractProduct
            \Magento\Framework\Stdlib\DateTime\TimezoneInterface $timezone,
           \ Magento\Rule\Model\Condition\Combine $validate,
            \Magepow\Promotionbar\Helper\Data $helper,
+             \Magepow\Promotionbar\Serialize\Serializer\Json $json
 
         array $data = []
     ) {
@@ -57,6 +59,7 @@ class Promotionbar extends \Magento\Catalog\Block\Product\AbstractProduct
      	  $this->_registry = $registry;
      	  $this->_timezone = $timezone;
           $this->validate = $validate;
+          $this->_json= $json;
      	
         $this->_storeManager = $storeManager;
         $this->_helper = $helper;
@@ -99,7 +102,7 @@ class Promotionbar extends \Magento\Catalog\Block\Product\AbstractProduct
             foreach ($collection as $item) {
                 $config = $item->getConditionsSerialized();
                 $display = $item->getDisplayPage();
-                $data = @unserialize($config);
+                $data = $this->_json->unserialize($config);
                 $parameters =  $data['parameters'];
                
                 $rule = $this->getRule($parameters);

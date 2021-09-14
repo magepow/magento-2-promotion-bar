@@ -12,13 +12,13 @@ class Save extends \Magento\Backend\App\Action
         parent::__construct($context);
         $this->_promotionbarFactory = $promotionbarFactory;
     }
-    // public function serialize($data)
-    // {
+    public function serialize($data)
+    {
 
-    //     $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
-    //     $serializer = $objectManager->create(\Magento\Framework\Serialize\SerializerInterface::class);
-    //     return $serializer->serialize($data);
-    // }
+        $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+        $serializer = $objectManager->create(\Magento\Framework\Serialize\SerializerInterface::class);
+        return $serializer->serialize($data);
+    }
 
     public function execute()
     {
@@ -45,7 +45,7 @@ class Save extends \Magento\Backend\App\Action
                 
                      
             }
-              $data['conditions_serialized'] = @serialize($data);
+              $data['conditions_serialized'] = $this->serialize($data);
               
               if (isset($data['display_onpage'])) $data['display_onpage'] = implode(',', $data['display_onpage']);
              if(isset($data['customer_group'])) $data['customer_group'] = implode(',', $data['customer_group']);
