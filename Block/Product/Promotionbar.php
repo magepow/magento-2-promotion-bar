@@ -29,6 +29,7 @@ class Promotionbar extends \Magento\Catalog\Block\Product\AbstractProduct
     protected $_helper;
     protected $validate;
     protected $_json;
+   
 
     /**
      * @param Context $context
@@ -74,15 +75,16 @@ class Promotionbar extends \Magento\Catalog\Block\Product\AbstractProduct
         $store = $this->_storeManager->getStore()->getStoreId();
        // print_r($store);
         $customerGroup = $this->getCustomerGroup();
-        $position = array('header.container', 'content.top', 'content.bottom','page.bottom.container');
+       
         $collection = $this->_promotionbarFactory->create()->getCollection()
                         ->addFieldToSelect('*')
                         ->addFieldToFilter('is_active', 1)
-                        ->addFieldToFilter('stores', array(array('finset' => 0), array('finset' => $store)))
+                         ->addFieldToFilter('stores', array(array('finset' => 0), array('finset' => $store)))
                         ->addFieldToFilter('start_at', array('lteq' => $date))
-                        ->addFieldToFilter('end_at', array('gteq' => $date))
-                        ->addFieldToFilter('customer_group',array(array('finset'=>0), array('finset'=>$customerGroup)))
-                        ->setOrder('sort_order','DESC');
+                         ->addFieldToFilter('end_at', array('gteq' => $date))
+                        ->addFieldToFilter('customer_group',array(array('finset'=>0), array('finset'=>$customerGroup)));
+                        // ->setOrder('sort_order','DESC')
+             $collection->setOrder('sort_order','DESC');
                         
                        
 
@@ -99,47 +101,22 @@ class Promotionbar extends \Magento\Catalog\Block\Product\AbstractProduct
       
             $promotionbar  = '';
            
-            foreach ($collection as $item) {
-                $config = $item->getConditionsSerialized();
-                $display = $item->getDisplayPage();
-                $data = $this->_json->unserialize($config);
-                $parameters =  $data['parameters'];
-               
-                $rule = $this->getRule($parameters);
-
-                 $validate = $rule->getConditions()->validate($product);
-                 if($validate){
-                  
-                    $promotionbar = $item;
-                    break;
-                }                               
-            
-          }
-
-           return $promotionbar;
-        }
-
-        return $this->getData('promotionbar');
-    }
-     public function getPromotionbarCategory()
-    {
-        if(!$this->hasData('promotionbar')) {
-
-            $collection = $this->getPromotionbarCollection();
-            $categorySelection    = $this->getCurrentCategory();    
-            $promotionbar  = '';
-           
-            foreach ($collection as $item) {
-                $categoryId = $item->getCategory();             
-                
-			if($categoryId && in_array($categoryId, explode(",", $categorySelection))){
+            foreach ($collection as $key => $item) {
+              $config = $item->getConditionsSerialized();
+              $data = $this->_json->unserialize($config);
+              $parameters =  $data['parameters'];
+              $rule = $this->getRule($parameters);
+              $validate = $rule->getConditions()->validate($product);
                  
-                    $promotionbar = $item;
+              if($validate){
+                  
+                    $promotionbar = $parameters;
                     break;
-                }
-                                      
+                    
+               }else{
+                return;
+               }                                  
           }
-         
           return $promotionbar;
         }
 
@@ -173,12 +150,22 @@ class Promotionbar extends \Magento\Catalog\Block\Product\AbstractProduct
 
     public function getDataSliderControl(){
       $getDataSliderControl = $this->_helper->getConfigModule('magepow_promotionbar/general/showslider');
+      
       if($getDataSliderControl == 1){
         return "true";
       }else{
         return "false";
       }
     }
-   
-    
+
+    public function PromotionbarInfo($entityId) {
+      $rowData = $this->_promotionbarFactory->create();
+
+     // $item = $this->_json->unserialize('conditions_serialized');
+      $conditions_serialized = $rowData->load($entityId)->getConditionsSerialized();
+        return $this->_json->unserialize($conditions_serialized);
+
+    }
+
+
 }

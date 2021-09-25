@@ -8,9 +8,9 @@ class SelectPage implements OptionSourceInterface
     
     public function getOptionArray()
     {
-        $options = ['1' => __('Home page'),
-        '2' => __('Shopping Cart Page'),
-        '3'=>__('Checkout page')];
+        $options = ['cms_index_index' => __('Home page'),
+        'checkout_cart_index' => __('Shopping Cart Page'),
+        'checkout_index_index'=>__('Checkout page')];
         return $options;
     }
  

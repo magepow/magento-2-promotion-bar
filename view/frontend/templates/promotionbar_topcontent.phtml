@@ -6,74 +6,74 @@
 	$speedSlider = $helper->getConfigModule('magepow_promotionbar/general/speedslider');
 	$autoclose = $helper->getConfigModule('magepow_promotionbar/general/autoclose');
 	$selector    = 'promotionbar-'.uniqid();
+	$productPromotion = $block->getPromotionbarCollection();
+
 	?>
 <div data-mage-init='{"promotionbar": {}}'>
+
 	<?php if($block->getRequest()->getFullActionName() == "cms_index_index"
 	||$block->getRequest()->getFullActionName() == "checkout_cart_index"
 	|| $block->getRequest()->getFullActionName() == "checkout_index_index") {?> 
 <div data-role="promotion-collection"class="promotionbar promotionbar-topcontent <?php echo $selector ?>">
 	
-
-	<?php $productPromotion = $block->getPromotionbarCollection(); ?>
+	<?php  ?>
 	<?php foreach ($productPromotion as $value):?>
-		<?php if($value->getPosition() == 1){ ?>
+	
+		<?php if($value->getPosition() == 1): ?>
 
 	<div id="content <?php echo ($value->getPosition())?>-<?php echo ($value->getEntityId())?>"><?php echo $block->getContentFromStaticBlock($value->getPromotionbarInfo());?>
 		
 	</div>
-	<?php } ?>
+	<?php endif; ?>
 	<?php  endforeach; ?>
 	</div>
 <?php } ?>
-
-
 <?php if($block->getRequest()->getFullActionName() == "catalog_category_view") {
-	$productPromotion = $block->getPromotionbarCategory();
-	if(!$productPromotion) return;
-	
-	$promotionInfo = $productPromotion['promotionbar_info'];
-
-	$position = $productPromotion['position'];
-	$id = $productPromotion['entity_id'];
-
-	if($position == 1){
 	?>
 	<div data-role="promotion-collection"class="promotionbar promotionbar-topcontent <?php echo $selector ?>">
-
-	<div id="content <?php echo ($position)?>-<?php echo ($id)?>"><?php echo $block->getContentFromStaticBlock($promotionInfo);?>
+		<?php foreach ($productPromotion as $value):?>
+			<?php if($value->getPosition() == 1):?>
+			<?php $category = $value->getCategory();
+			$categoryArray = array($category);
+			if(array_intersect(explode(",", $block->getCurrentCategory()),$categoryArray)): ?>
+			
+	<div id="content <?php echo ($value->getPosition())?>-<?php echo ($value->getEntityId())?>"><?php echo $block->getContentFromStaticBlock($value->getPromotionbarInfo());?>
 		
 	</div>
+	<?php endif;
+			endif;
+	?>
+	<?php  endforeach; ?>
 </div>
-
-
-
-<?php } 
+<?php 
 }
 ?>
 <?php if($block->getRequest()->getFullActionName() == "catalog_product_view") {
-	$productPromotion = $block->getPromotionbarProduct();
-	if(!$productPromotion) return;
-	$promotionInfo = $productPromotion['promotionbar_info'];
-	$position = $productPromotion['position'];
-	if($position == 1){
+	$productPromotionbar = $block->getPromotionbarProduct();
+	//print_r($productPromotionbar);exit();	
+	
 	?>
 	<div data-role="promotion-collection"class="promotionbar promotionbar-topcontent <?php echo $selector ?>">
-
-	<div id="content <?php echo ($position)?>"><?php echo $block->getContentFromStaticBlock($promotionInfo);?>
-		
+		<?php foreach ($productPromotion as $value):?>
+			<?php 
+			if($value->getPosition() == 1): ?>
+				<?php $config = $block->PromotionbarInfo($value->getEntityId());
+				$parameters = array($config['parameters']);
+				if(in_array($productPromotionbar,$parameters)):?>
+				
+			 
+	<div id="content <?php echo ($value->getPosition())?>"><?php echo $block->getContentFromStaticBlock($value->getPromotionbarInfo());?>		
 	</div>
+
+		<?php 
+		endif;
+			endif;
+		?>
+<?php endforeach;?>
 </div>
-
-
-
-<?php } 
-}
+<?php 
+	} 
 ?>
-	
-
-
-
-
 </div>
 <script type="text/x-magento-init">
         {
@@ -86,4 +86,4 @@
                 }
             }
         }
-    </script> 
+    </script>  

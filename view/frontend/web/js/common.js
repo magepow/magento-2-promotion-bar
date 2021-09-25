@@ -12,8 +12,7 @@ define(['jquery', 'jquery-ui-modules/widget', 'Magepow_Promotionbar/js/slick'], 
             infinite: true,
             slidesToShow: 1,
             autoplay: true,
-             speed: speedSlider,
-             arrows: sliderControl
+             speed: speedSlider
 
         });
     });
