@@ -50,30 +50,41 @@
 } 
 ?>
 <?php if($block->getRequest()->getFullActionName() == "catalog_product_view") {
-	$productPromotionbar = $block->getPromotionbarProduct();		
+	$productPromotionbar = $block->getPromotionbarProduct();
+	// if(! $productPromotion) return;
+	// $promotionInfo = $productPromotion['promotionbar_info'];
+	// // print_r($promotionInfo);
+	// // exit();
+	// $promotion = $productPromotion['conditions_serialized'];
+	// print_r($promotion);
+	// exit();
+	// $position = $productPromotion['position'];
+	
+	//if($position == 2){
 	?>
 	<div data-role="promotion-collection"class="promotionbar promotionbar-topmenu <?php echo $selector ?>">
 		<?php foreach ($productPromotion as $value):?>
-			<?php 
-			if($value->getPosition() == 2): ?>
-				<?php $config = $block->PromotionbarInfo($value->getEntityId());
-				$parameters = array($config['parameters']);
-				if(in_array($productPromotionbar,$parameters)):?>
+		<?php if($value->getPosition() == 2): ?>
+				<?php $config = $block->PromotionbarInfo($value->getEntityId()); ?>
+				<?php $parameters = array($config['parameters']);?>
+				<?php if(in_array($productPromotionbar,$parameters)):?>
 				
-			 ?>
-	<div id="content product promotionbar-<?php echo ($value->getEntityId())?>"><?php echo $block->getContentFromStaticBlock($value->getPromotionbarInfo());?>
+	<div id="content <?php echo ($value->getPosition())?>"><?php echo $block->getContentFromStaticBlock($value->getPromotionbarInfo());?>
 		
 	</div>
+<?php endif; ?>
+	<?php endif; ?>
+	<?php endforeach; ?>
 
-		<?php 
-		endif;
-			endif;
-			?>
-	<?php endforeach;?>
-	</div>
-<?php 
-	} 
+</div>
+
+
+
+<?php } 
+
+//}
 ?>
+
 
 
 </div>

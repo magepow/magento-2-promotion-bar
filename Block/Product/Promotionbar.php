@@ -27,7 +27,6 @@ class Promotionbar extends \Magento\Catalog\Block\Product\AbstractProduct
     protected $_customerSession;
     protected $_conditions;
     protected $_helper;
-    protected $validate;
     protected $_json;
    
 
@@ -47,7 +46,6 @@ class Promotionbar extends \Magento\Catalog\Block\Product\AbstractProduct
          \Magento\Customer\Model\Session $customerSession,
           \Magento\Store\Model\StoreManagerInterface $storeManager,
            \Magento\Framework\Stdlib\DateTime\TimezoneInterface $timezone,
-          \ Magento\Rule\Model\Condition\Combine $validate,
            \Magepow\Promotionbar\Helper\Data $helper,
              \Magepow\Promotionbar\Serialize\Serializer\Json $json,
 
@@ -59,7 +57,6 @@ class Promotionbar extends \Magento\Catalog\Block\Product\AbstractProduct
         $this->_promotionbarFactory = $promotionbarFactory;
      	  $this->_registry = $registry;
      	  $this->_timezone = $timezone;
-          $this->validate = $validate;
           $this->_json= $json;
      	
         $this->_storeManager = $storeManager;
@@ -82,13 +79,13 @@ class Promotionbar extends \Magento\Catalog\Block\Product\AbstractProduct
                          ->addFieldToFilter('stores', array(array('finset' => 0), array('finset' => $store)))
                         ->addFieldToFilter('start_at', array('lteq' => $date))
                          ->addFieldToFilter('end_at', array('gteq' => $date))
-                        ->addFieldToFilter('customer_group',array(array('finset'=>0), array('finset'=>$customerGroup)));
-                        // ->setOrder('sort_order','DESC')
-             $collection->setOrder('sort_order','DESC');
-                        
-                       
+                        ->addFieldToFilter('customer_group',array(array('finset'=>0), array('finset'=>$customerGroup)))
+                        ->setOrder('sort_order','ASC');                    
 
         return $collection;
+    }
+    public function getPositionPromotionbar($position){
+            return $this->getPromotionbarProduct();
     }
  
 
@@ -103,21 +100,26 @@ class Promotionbar extends \Magento\Catalog\Block\Product\AbstractProduct
            
             foreach ($collection as $key => $item) {
               $config = $item->getConditionsSerialized();
+            
               $data = $this->_json->unserialize($config);
+              $getIsShownOnProductpage = $item->getIsShownOnProductpage();
+            
+              if($getIsShownOnProductpage == 1){
               $parameters =  $data['parameters'];
               $rule = $this->getRule($parameters);
               $validate = $rule->getConditions()->validate($product);
-                 
-              if($validate){
+               
+              if($validate ){
                   
-                    $promotionbar = $parameters;
-                    break;
+                    $promotionbar =  $parameters;
+                  break;
                     
-               }else{
-                return;
-               }                                  
-          }
-          return $promotionbar;
+               }                    
+           
+      }
+  }
+         //exit();
+          $this->setData('promotionbar', $promotionbar);
         }
 
         return $this->getData('promotionbar');
@@ -150,7 +152,7 @@ class Promotionbar extends \Magento\Catalog\Block\Product\AbstractProduct
 
     public function getDataSliderControl(){
       $getDataSliderControl = $this->_helper->getConfigModule('magepow_promotionbar/general/showslider');
-      
+
       if($getDataSliderControl == 1){
         return "true";
       }else{
