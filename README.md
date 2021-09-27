@@ -18,7 +18,7 @@ Magento 2 Promotiobar is a module allows admin to show their promotion banner at
 
 - Works well on mobile devices
 
-## Download Magento 2 Sizechart Extension
+## Download Magento 2 Promotionbar Extension
 ### Install via composer (recommend)
 Run the following commands in Magento 2 root folder:
 ```
