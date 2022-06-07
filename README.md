@@ -1,4 +1,4 @@
-## Magento 2 Promotionbar
+## Magento 2 Promotion Bar
 
 Magento 2 Promotiobar is a module allows admin to show their promotion banner at some positions of the pages to attract customers about promotions.
 
