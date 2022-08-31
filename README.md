@@ -19,6 +19,9 @@ Magento 2 Promotiobar is a module allows admin to show their promotion banner at
 - Works well on mobile devices
 
 ## Download Magento 2 Promotionbar Extension
+[![Latest Stable Version](https://poser.pugx.org/magepow/promotionbar/v/stable)](https://packagist.org/packages/magepow/promotionbar)
+[![Total Downloads](https://poser.pugx.org/magepow/promotionbar/downloads)](https://packagist.org/packages/magepow/promotionbar)
+[![Daily Downloads](https://poser.pugx.org/magepow/promotionbar/d/daily)](https://packagist.org/packages/magepow/promotionbar)
 ### Install via composer (recommend)
 Run the following commands in Magento 2 root folder:
 ```
