@@ -7,8 +7,6 @@ use Magento\Backend\Block\Widget\Tab\TabInterface;
 
 class Main extends Generic implements TabInterface
 {
-
-
     protected $_systemStore;
     protected $_objectManager;
     protected $_customerGroup;
@@ -35,7 +33,6 @@ class Main extends Generic implements TabInterface
         parent::__construct($context, $registry, $formFactory, $data);
     }
     protected function _prepareForm()
-
     {
         $dateFormat = $this->_localeDate->getDateFormat(\IntlDateFormatter::SHORT);
         $model = $this->_coreRegistry->registry('row_data');
@@ -54,7 +51,7 @@ class Main extends Generic implements TabInterface
             );
         }
  
-       $fieldset->addField(
+        $fieldset->addField(
             'name',
             'text',
             [
@@ -92,20 +89,19 @@ class Main extends Generic implements TabInterface
             $model->setStoreId($this->_storeManager->getStore(true)->getId());
         }
        
-         $fieldset->addField(
-    'customer_group',
-    'multiselect',
-    [
-        'name' => 'customer_group[]',
-        'label' => __('Customer Group'),
-        'title' => __('Customer Group'),
-         'required' => false,
-        'values' => $this->_customerGroup->toOptionArray(),
-    ]
-);
-         
-      
-            $fieldset->addField(
+        $fieldset->addField(
+            'customer_group',
+            'multiselect',
+            [
+                'name' => 'customer_group[]',
+                'label' => __('Customer Group'),
+                'title' => __('Customer Group'),
+                'required' => false,
+                'values' => $this->_customerGroup->toOptionArray(),
+            ]
+        );
+
+        $fieldset->addField(
             'sort_order',
             'text',
             [
@@ -116,8 +112,7 @@ class Main extends Generic implements TabInterface
                 'required' => true,
             ]
         );
-            
-      
+
         $fieldset->addField(
             'is_active',
             'select',
@@ -131,7 +126,8 @@ class Main extends Generic implements TabInterface
                 'required' => true,
             ]
         );
-         $fieldset->addField(
+
+        $fieldset->addField(
             'start_at',
             'date',
             [
@@ -145,7 +141,8 @@ class Main extends Generic implements TabInterface
                 'required' => true
             ]
         );
-         $fieldset->addField(
+
+        $fieldset->addField(
             'end_at',
             'date',
             [

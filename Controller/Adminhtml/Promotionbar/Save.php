@@ -12,9 +12,9 @@ class Save extends \Magento\Backend\App\Action
         parent::__construct($context);
         $this->_promotionbarFactory = $promotionbarFactory;
     }
+
     public function serialize($data)
     {
-
         $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
         $serializer = $objectManager->create(\Magento\Framework\Serialize\SerializerInterface::class);
         return $serializer->serialize($data);
@@ -23,7 +23,6 @@ class Save extends \Magento\Backend\App\Action
     public function execute()
     {
         $resultRedirect = $this->resultRedirectFactory->create();
-
         // check if data sent
         $data = $this->getRequest()->getPostValue();
 
@@ -39,31 +38,24 @@ class Save extends \Magento\Backend\App\Action
                 return $resultRedirect->setPath('*/*/');
             }
 
-              if (isset($data['category'])){
-
+            if (isset($data['category'])){
                 $data['category'] = implode(',', $data['category']);
-                
-                     
             }
-              $data['conditions_serialized'] = $this->serialize($data);
-              
-              if (isset($data['display_onpage'])) $data['display_onpage'] = implode(',', $data['display_onpage']);
-             if(isset($data['customer_group'])) $data['customer_group'] = implode(',', $data['customer_group']);
+
+            $data['conditions_serialized'] = $this->serialize($data);
+            if (isset($data['display_onpage'])) $data['display_onpage'] = implode(',', $data['display_onpage']);
+            if(isset($data['customer_group'])) $data['customer_group'] = implode(',', $data['customer_group']);
             if (isset($data['stores'])) $data['stores'] = implode(',', $data['stores']);
             $model->setData($data)->setStoreViewId($storeViewId);;
-
             // try to save it
             try {
-
                 $model->save();
                 // display success message
                 $this->messageManager->addSuccess(__('You saved the item.'));
-
                 if ($this->getRequest()->getParam('back')) {
                     $this->_redirect('*/*/addrow', ['id' => $model->getId(), '_current' => true]);
                     return;
                 }
-
                 // go to grid
                 return $resultRedirect->setPath('*/*/index');
             } catch (\Exception $e) {
@@ -78,8 +70,5 @@ class Save extends \Magento\Backend\App\Action
 
         return $resultRedirect->setPath('*/*/index');
     }
-     protected function _isAllowed()
-    {
-        return $this->_authorization->isAllowed('Magepow_Promotionbar::save');
-    }
+
 }

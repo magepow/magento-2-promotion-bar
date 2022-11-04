@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Magepow\Promotionbar\Controller\Adminhtml\Promotionbar;
 
 use Magento\Framework\Controller\ResultFactory;
@@ -10,27 +9,19 @@ class AddRow extends \Magento\Backend\App\Action
     private $coreRegistry;
     private $promotionbarFactory;
     private $_json;
-  
 
-    public function __construct(\Magento\Backend\App\Action\Context $context, 
+    public function __construct(
+        \Magento\Backend\App\Action\Context $context, 
         \Magento\Framework\Registry $coreRegistry,
         \Magepow\Promotionbar\Model\PromotionbarFactory $promotionbarFactory,
-         \Magepow\Promotionbar\Serialize\Serializer\Json $json
+        \Magepow\Promotionbar\Serialize\Serializer\Json $json
     ) {
         parent::__construct($context);
         $this->coreRegistry = $coreRegistry;
         $this->promotionbarFactory = $promotionbarFactory;
         $this->_json = $json;
     }
-//   public function unserialize($data)
-//  {
-    
-//         $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
-//         $serializer = $objectManager->create(\Magento\Framework\Serialize\Serializer\Json::class);
-//         return $serializer->unserialize($data);
-    
-     
-// }
+
     public function execute()
     {
         $rowId = (int) $this->getRequest()->getParam('id');
@@ -65,10 +56,5 @@ class AddRow extends \Magento\Backend\App\Action
         $resultPage->getConfig()->getTitle()->prepend($title);
         return $resultPage;
     }
-     protected function _isAllowed()
-    {
-        return $this->_authorization->isAllowed('Magepow_Promotionbar::add_row');
-    }
-
 
 }

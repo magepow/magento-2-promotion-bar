@@ -7,22 +7,19 @@ use Magento\Backend\Block\Widget\Tab\TabInterface;
 
 class Rule extends Generic implements TabInterface
 {
-
-
     protected $_systemStore;
     protected $_objectManager;
     protected $_displaypage;
     protected $_selectpage;
-     protected $_renderFieldSet;
+    protected $_renderFieldSet;
     protected $_conditions;
     protected $_showonProductPage;
     protected $_category;
   
-
     public function __construct(
         \Magento\Backend\Block\Template\Context $context,
         \Magento\Framework\Registry $registry,
-         \Magento\Cms\Model\Wysiwyg\Config $wysiwygConfig,
+        \Magento\Cms\Model\Wysiwyg\Config $wysiwygConfig,
         \Magento\Framework\Data\FormFactory $formFactory,
         \Magento\Framework\ObjectManagerInterface $objectManager,
         \Magepow\Promotionbar\Model\Position $options,
@@ -30,11 +27,10 @@ class Rule extends Generic implements TabInterface
         \Magento\Store\Model\System\Store $systemStore,
         \Magepow\Promotionbar\Model\SelectPage $selectpage,
         \Magepow\Promotionbar\Model\ShowOnProductPage $showonProductPage,
-          \Magento\Rule\Block\Conditions $conditions,
-          \Magepow\Promotionbar\Model\System\Config\Category $category,
-
+        \Magento\Rule\Block\Conditions $conditions,
+        \Magepow\Promotionbar\Model\System\Config\Category $category,
         \Magento\Backend\Block\Widget\Form\Renderer\Fieldset $rendererFieldset,
-       
+
         array $data = []
     ) {
     	$this->_showonProductPage = $showonProductPage;
@@ -52,7 +48,6 @@ class Rule extends Generic implements TabInterface
         parent::__construct($context, $registry, $formFactory, $data);
     }
     protected function _prepareForm()
-
     {
         $dateFormat = $this->_localeDate->getDateFormat(\IntlDateFormatter::SHORT);
         $model = $this->_coreRegistry->registry('row_data');
@@ -84,7 +79,6 @@ class Rule extends Generic implements TabInterface
 
         }
 
-
         $newChildUrl = $this->getUrl(
             'catalog_rule/promo_catalog/newConditionHtml/form/' . $fieldsetId,
             ['form_namespace' => $fieldsetId]
@@ -93,93 +87,91 @@ class Rule extends Generic implements TabInterface
         $renderer = $this->_renderFieldSet->setTemplate('Magento_CatalogRule::promo/fieldset.phtml')
             ->setNewChildUrl($newChildUrl)
             ->setFieldSetId($fieldsetId);
-
- 
-    
        
-         $fieldset->addField(
-    'position',
-    'select',
-    [
-        'name' => 'position',
-        'label' => __('Position'),
-        'title' => __('Position'),
-        'values' => $this->_options->toOptionArray(),
-    ]
-);       
-       
+        $fieldset->addField(
+            'position',
+            'select',
+            [
+                'name' => 'position',
+                'label' => __('Position'),
+                'title' => __('Position'),
+                'values' => $this->_options->toOptionArray(),
+            ]
+        );
 
-         $field = $fieldset->addField(
-    'display_onpage',
-    'multiselect',
-    [
-        'name' => 'display_onpage',
-        'label' => __('Select Page'),
-        'title' => __('Select Page'),
-        'values' => $this->_selectpage->toOptionArray(),
-    ]
-);   
-           // $field->setAfterElementHtml(
-           // 	' <script type="text/javascript">
-           // 	require([
-           //          "jquery",
-           //          "uiRegistry"
-           //      ],  function($, uiRegistry){
-           //              jQuery(document).ready(function($) {
-           //              $(".field-display_onpage").hide();
-           //               $(".field-category").hide();
-                         
-           //                 var afterChangeVal = $("#wkgrid_display_page").find(":selected").val();
-           //                  if( afterChangeVal == 1) {
-           //                            $(".field-display_onpage").show();
-           //               $(".field-category").show();
-           //                $(".field-is_shown_on_productpage").show();
-           //                }else{
-           //                  $(".field-display_onpage").hide();
-           //               $(".field-category").hide();
-           //                $(".field-is_shown_on_productpage").hide();
-           //                 $(".rule-tree").hide();
+        $field = $fieldset->addField(
+            'display_onpage',
+            'multiselect',
+            [
+                'name' => 'display_onpage',
+                'label' => __('Select Page'),
+                'title' => __('Select Page'),
+                'values' => $this->_selectpage->toOptionArray(),
+            ]
+        ); 
 
-                           
-           //                }
-           //               $("#wkgrid_display_page").change(function ()
-           //                  {
-           //                       var afterChangeVal = $("#wkgrid_display_page").find(":selected").val();
-                            	
-           //                  	 if( afterChangeVal == 1) {
-           //                  	 	  $(".field-display_onpage").show();
-           //               $(".field-category").show();
-           //                $(".field-is_shown_on_productpage").show();
-           //                  $(".rule-tree").show();
-           //                  	 }else{
-           //                  	 	$(".field-display_onpage").hide();
-           //               $(".field-category").hide();
-           //                $(".field-is_shown_on_productpage").hide();
-           //                $(".rule-tree").hide();
-                         
-           //                  	 }
-           //                  	});
+        // $field->setAfterElementHtml(
+        // ' <script type="text/javascript">
+        // require([
+        //         "jquery",
+        //         "uiRegistry"
+        //     ],  function($, uiRegistry){
+        //             jQuery(document).ready(function($) {
+        //             $(".field-display_onpage").hide();
+        //                 $(".field-category").hide();
+                        
+        //                 var afterChangeVal = $("#wkgrid_display_page").find(":selected").val();
+        //                 if( afterChangeVal == 1) {
+        //                             $(".field-display_onpage").show();
+        //                 $(".field-category").show();
+        //                 $(".field-is_shown_on_productpage").show();
+        //                 }else{
+        //                 $(".field-display_onpage").hide();
+        //                 $(".field-category").hide();
+        //                 $(".field-is_shown_on_productpage").hide();
+        //                 $(".rule-tree").hide();
+
+                        
+        //                 }
+        //                 $("#wkgrid_display_page").change(function ()
+        //                 {
+        //                         var afterChangeVal = $("#wkgrid_display_page").find(":selected").val();
+                            
+        //                         if( afterChangeVal == 1) {
+        //                             $(".field-display_onpage").show();
+        //                 $(".field-category").show();
+        //                 $(".field-is_shown_on_productpage").show();
+        //                 $(".rule-tree").show();
+        //                         }else{
+        //                         $(".field-display_onpage").hide();
+        //                 $(".field-category").hide();
+        //                 $(".field-is_shown_on_productpage").hide();
+        //                 $(".rule-tree").hide();
+                        
+        //                         }
+        //                     });
 
 
-           //              	})
-           //              	})
-           // 	</script>'
-           // );
+        //                 })
+        //                 })
+        // </script>'
+        // );
 
-    //      $fieldset->addType(
-    //     'categories',
-    //     '\Magento\Catalog\Block\Adminhtml\Product\Helper\Form\Category'
-    //    );
-    //      $fieldset->addField(
-    //     'category',
-    //     'categories',
-    //     [
-    //         'name' => 'category',
-    //         'label' => __('Category Page'),
-    //         'title' => __('Category Page')
-    //     ]
-    // );
-$fieldset->addField('category', 'multiselect',
+        // $fieldset->addType(
+        //     'categories',
+        //     '\Magento\Catalog\Block\Adminhtml\Product\Helper\Form\Category'
+        // );
+        //     $fieldset->addField(
+        //     'category',
+        //     'categories',
+        //     [
+        //         'name' => 'category',
+        //         'label' => __('Category Page'),
+        //         'title' => __('Category Page')
+        //     ]
+        // );
+
+        $fieldset->addField('category', 'multiselect',
             [
                 'label' => __('Category Page(s)'),
                 'title' => __('Category Page(s)'),
@@ -187,21 +179,23 @@ $fieldset->addField('category', 'multiselect',
                 'values' => $this->_category->toOptionArray()
             ]
         );
-       $showonProductPage =  $fieldset->addField(
-    'is_shown_on_productpage',
-    'select',
-    [
-        'name' => 'is_shown_on_productpage',
-        'label' => __('Show on product page'),
-        'title' => __('Show on product page'),
-        'values' => $this->_showonProductPage->toOptionArray()
-      ]
-);       
-        
-  $fieldset = $form->addFieldset(
+
+        $showonProductPage =  $fieldset->addField(
+            'is_shown_on_productpage',
+            'select',
+            [
+                'name' => 'is_shown_on_productpage',
+                'label' => __('Show on product page'),
+                'title' => __('Show on product page'),
+                'values' => $this->_showonProductPage->toOptionArray()
+            ]
+        );       
+                
+        $fieldset = $form->addFieldset(
             $fieldsetId,
             ['legend' => __('Conditions (don\'t add conditions if rule is applied to all products)')]
         )->setRenderer($renderer);
+
         $fieldset->addField(
             'conditions',
             'text',
@@ -212,11 +206,7 @@ $fieldset->addField('category', 'multiselect',
                 'required' => false,
                 'data-form-parts' => $formName
             ]
-        )
-            ->setRule($modelConditions)
-            ->setRenderer($this->_conditions);
-
-
+        )->setRule($modelConditions)->setRenderer($this->_conditions);
 
         $form->setValues($model->getData());
         $this->setForm($form);
@@ -226,11 +216,9 @@ $fieldset->addField('category', 'multiselect',
         ->addFieldMap($showonProductPage->getHtmlId(), $showonProductPage->getName())
         ->addFieldMap( $fieldsetId, $fieldsetId)
         ->addFieldDependence($fieldsetId, $showonProductPage->getName(), 1)
-        );// 
-         
-
+        );
+    
         return parent::_prepareForm();
-
     }
 
     public function getTabLabel()
@@ -269,4 +257,3 @@ $fieldset->addField('category', 'multiselect',
         return false;
     }
 }
-?>

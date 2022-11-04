@@ -1,7 +1,6 @@
 <?php
 namespace Magepow\Promotionbar\Block\Adminhtml\Promotionbar\Edit;
 
-
 /**
  * Adminhtml Add New Row Form.
  */
@@ -13,7 +12,6 @@ class Form extends \Magento\Backend\Block\Widget\Form\Generic
     protected $_systemStore;
     protected $_options;
 
-    
     public function __construct(
         \Magento\Backend\Block\Template\Context $context,
         \Magento\Framework\Registry $registry,

@@ -54,10 +54,7 @@ class Tabs extends WidgetTabs
                 )->toHtml(),
             ]
         );
-        
 
         return parent::_beforeToHtml();
     }
 }
-
-

@@ -47,8 +47,4 @@ class MassDelete extends \Magento\Backend\App\Action
         return $this->resultFactory->create(ResultFactory::TYPE_REDIRECT)->setPath('*/*/index');
     }
 
-    protected function _isAllowed()
-    {
-        return $this->_authorization->isAllowed('Magepow_Promotionbar::delete');
-    }
 }

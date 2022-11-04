@@ -2,6 +2,11 @@
     <acl>
         <resources>
             <resource id="Magento_Backend::admin">
+	        	<resource id="Magepow_Promotionbar::magepow" title="Magepow" sortOrder="10">
+	        	    <resource id="Magepow_Promotionbar::promotionbar" title="Promotionbar" sortOrder="10">
+	        	        <resource id="Magepow_Promotionbar::promotionbar_addrow" title="Promotionbar" sortOrder="10" />
+	        	    </resource>
+	        	</resource>
                 <resource id="Magento_Backend::stores">
                     <resource id="Magento_Backend::stores_settings">
                         <resource id="Magento_Config::config">

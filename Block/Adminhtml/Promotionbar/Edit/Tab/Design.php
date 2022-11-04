@@ -8,7 +8,6 @@ use Magento\Backend\Block\Widget\Tab\TabInterface;
 class Design extends Generic implements TabInterface
 {
 
-
     protected $_systemStore;
     protected $_objectManager;
     public function __construct(
@@ -47,19 +46,20 @@ class Design extends Generic implements TabInterface
                 ['legend' => __('Add Promotionbar Design'), 'class' => 'fieldset-wide']
             );
         }
-  // $field = $fieldset->addField(
-  //           'background_color',
-  //           'text',
-  //           [
-  //               'name' => 'background_color',
-  //               'label' => __('Background Color'),
-  //               'id' => 'background_color',
-  //               'title' => __('Background color'),
-  //               'required' => false,
-  //           ]
-  //       );
-  //        $renderer = $this->getLayout()->createBlock('Magepow\Promotionbar\Block\Adminhtml\Color');
-  //        $field->setRenderer($renderer);
+
+        // $field = $fieldset->addField(
+        //     'background_color',
+        //     'text',
+        //     [
+        //         'name' => 'background_color',
+        //         'label' => __('Background Color'),
+        //         'id' => 'background_color',
+        //         'title' => __('Background color'),
+        //         'required' => false,
+        //     ]
+        // );
+        //  $renderer = $this->getLayout()->createBlock('Magepow\Promotionbar\Block\Adminhtml\Color');
+        //  $field->setRenderer($renderer);
 
          $fieldset->addField(
             'promotionbar_info',
@@ -76,14 +76,10 @@ class Design extends Generic implements TabInterface
             ]
         );
         
-        
-
-
         $form->setValues($model->getData());
         $this->setForm($form);
 
         return parent::_prepareForm();
-
     }
 
     public function getTabLabel()
