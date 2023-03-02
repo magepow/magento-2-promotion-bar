@@ -1,3 +1,5 @@
+[<img src="https://github.com/magepow/themeforest/blob/master/shopify/shopify_affiliate.jpg" >](https://shopify.pxf.io/VyL446)
+
 ## Magento 2 Promotion Bar
 
 Magento 2 Promotiobar is a module allows admin to show their promotion banner at some positions of the pages to attract customers about promotions.
